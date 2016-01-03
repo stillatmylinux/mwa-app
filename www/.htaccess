@@ -1,0 +1,4 @@
+Options +FollowSymLinks
+RewriteEngine On
+
+# RewriteRule ^json/(.*)$ json-wrapper.php?request=$1 [L,NE]

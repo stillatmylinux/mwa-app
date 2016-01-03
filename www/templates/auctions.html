@@ -1,0 +1,9 @@
+<ion-view view-title="Auctions">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="auction in auctions" href="#/app/auction/{{auction.id}}">
+        {{auction.auction_short_title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
