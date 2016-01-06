@@ -33,20 +33,20 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: 'search',
+  .state('app.states', {
+    url: 'states',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/states.html'
       }
     }
   })
 
-  .state('app.browse', {
-      url: 'browse',
+  .state('app.categories', {
+      url: 'categories',
       views: {
         'menuContent': {
-          templateUrl: 'templates/browse.html'
+          templateUrl: 'templates/categories.html'
         }
       }
     })
@@ -70,6 +70,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
+  .state('app.featured', {
+    url: 'featured',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/featured.html',
+        controller: 'FeaturedAdsCtrl'
+      }
+    }
+  })
+
   .state('app.auctions', {
     url: 'auctions',
     views: {
@@ -82,5 +92,5 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 
   ;
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('playlists');
+  $urlRouterProvider.otherwise('featured');
 });

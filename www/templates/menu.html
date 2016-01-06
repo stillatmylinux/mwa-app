@@ -1,68 +1,67 @@
 <ion-side-menus enable-menu-with-back-views="false">
-  
-  <ion-side-menu-content ng-controller="ContentController">
-    <ion-nav-bar class="bar-stable">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
+	
+	<ion-side-menu-content ng-controller="ContentController">
+		<ion-nav-bar class="bar-stable">
+			<ion-nav-back-button>
+			</ion-nav-back-button>
 
-      <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-        </button>
-      </ion-nav-buttons>
-    </ion-nav-bar>
-    <ion-nav-view name="menuContent"></ion-nav-view>
-  
+			<ion-nav-buttons side="left">
+				<button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+				</button>
+			</ion-nav-buttons>
+		</ion-nav-bar>
+		<ion-nav-view name="menuContent"></ion-nav-view>
+	
 
-     <ion-nav-bar class="bar-stable">
-         <ion-nav-back-button>
-             Back
-         </ion-nav-back-button>
-         <ion-nav-buttons side="left">
-             <button class="button button-icon button-clear ion-navicon" ng-click="toggleLeft()">
-             </button>
-         </ion-nav-buttons>
-     </ion-nav-bar>
-     <ion-tabs class="tabs-positive tabs-icon-only">
-         <ion-tab title="Local Deals" icon-on="ion-ios7-location" icon-off="ion-ios7-location-outline">
-             <!-- <ion-view>
-                 <ion-content>
-                   <h1>Tab #1</h1>
-                 </ion-content>
-             </ion-view> -->
-         </ion-tab>
-         <ion-tab title="Saved Searches" icon-on="ion-star" icon-off="ion-star">
-             <!-- <ion-view>
-                 <ion-content>
-                   <h1>Tab #2</h1>
-                 </ion-content>
-             </ion-view> -->
-
-         </ion-tab>
-     </ion-tabs>
+		<ion-nav-bar class="bar-stable">
+				<ion-nav-back-button>
+						Back
+				</ion-nav-back-button>
+				<ion-nav-buttons side="left">
+						<button class="button button-icon button-clear ion-navicon" ng-click="toggleLeft()">
+						</button>
+				</ion-nav-buttons>
+		</ion-nav-bar>
+		<ion-tabs class="tabs-stable">
+				<ion-tab title="Recent Postings">
+						<!-- <ion-view>
+								<ion-content>
+									<h1>Tab #1</h1>
+								</ion-content>
+						</ion-view> -->
+				</ion-tab>
+				<ion-tab title="Sale Day">
+						<!-- <ion-view>
+								<ion-content>
+									<h1>Tab #2</h1>
+								</ion-content>
+						</ion-view> -->
+				</ion-tab>
+		</ion-tabs>
  </ion-side-menu-content>
 
-  <ion-side-menu side="left">
-    <ion-header-bar class="bar-stable">
-      <h1 class="title">Left</h1>
-    </ion-header-bar>
-    <ion-content>
-      <ion-list>
-        <ion-item menu-close ng-click="login()">
-          Login
-        </ion-item>
-        <ion-item menu-close href="#/search">
-          Search
-        </ion-item>
-        <ion-item menu-close href="#/browse">
-          Browse
-        </ion-item>
-        <ion-item menu-close href="#/playlists">
-          Playlists
-        </ion-item>
-        <ion-item menu-close href="#/auctions">
-          Auctions
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-side-menu>
+	<ion-side-menu side="left">
+		<ion-header-bar class="bar-stable">
+			<h1 class="title">Left</h1>
+		</ion-header-bar>
+		<ion-content>
+			<ion-list>
+				<ion-item menu-close href="#/featured">
+					Featured
+				</ion-item>
+				<ion-item menu-close href="#/auctions">
+					Auctions
+				</ion-item>
+				<ion-item menu-close href="#/categories">
+					Categories
+				</ion-item>
+				<ion-item menu-close href="#/states">
+					States
+				</ion-item>
+				<ion-item menu-close ng-click="login()">
+					Login
+				</ion-item>
+			</ion-list>
+		</ion-content>
+	</ion-side-menu>
 </ion-side-menus>

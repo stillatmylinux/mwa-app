@@ -13,6 +13,12 @@ $energized:                       #ffc900 !default;
 $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
+
+Hey dork (yes, you Matt), just run
+
+gulp sass
+
+
 */
 
 // The path for our ionicons font files, relative to the built CSS in www/css
@@ -20,3 +26,23 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+
+.adsbymwa {
+	width:100%;
+	margin-top: 3px;
+	margin-bottom: 6px;
+}
+
+.adsbymwa p {
+	margin: auto;
+	text-align: center;
+	font-size: .8em;
+	color: #999;
+}
+
+.adsbymwa div {
+	width:300px;
+	height:250px;
+	margin: auto;
+	border: 1px solid #EEE;
+}
