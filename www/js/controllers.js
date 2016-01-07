@@ -60,7 +60,7 @@ angular.module('starter.controllers', [])
 // 	}
 // })
 
-.controller('FeaturedAdsCtrl', function($scope, $http) {
+.controller('FeaturedAdsCtrl', function($scope, $http, $ionicSlideBoxDelegate) {
 	$http({
 		method: 'GET',
 		url: mwauctions.domain + mwauctions.port + '/ads/featured/top/json',
@@ -77,13 +77,13 @@ angular.module('starter.controllers', [])
 			featured_ads = response.data.all;
 			
 			for(i=0;i<featured_ads.length;i++) {
+				featured_ads[i].auction_state = mwa.getStateAbbr(featured_ads[i].auction_state_id);
+				featured_ads[i].start_time = new Date(featured_ads[i].auction_datetime).format("%A, %b %d, %Y @ %l:%M %P");
 				for(j=0;j<featured_ads[i].featured_images.length;j++) {
 					featured_ads[i].featured_images[j] = mwauctions.domain+mwauctions.port+'/featured_images/'+featured_ads[i].featured_images[j];
 				}
 
 				console.log(featured_ads[i].featured_images)
-
-				// featuredImages3[++featuredImageCount] = new FlippinImage3(featured_ads[i].featured_images);
 			}
 
 			if( featured_ads.length ) {
@@ -91,7 +91,7 @@ angular.module('starter.controllers', [])
 				$scope.featured_ad.imageUrl = featured_ads[0].featured_images[0];
 			}
 			
-			console.log(featured_ads[0]);
+			$ionicSlideBoxDelegate.update();
 			// 	featured_images_js = featured_images_js.slice(0, -1);
 
 			//}

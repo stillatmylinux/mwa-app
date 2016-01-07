@@ -16,10 +16,23 @@ $dark:                            #444 !default;
 
 Hey dork (yes, you Matt), just run
 
+glup watch
+# OR
 gulp sass
 
-
 */
+
+$mwa_red:						  #a82137;
+$mwa_yellow_light:				  #f7efd6;
+$mwa_yellow_dark:				  #e7dec6;
+
+$light:                           #f7f2e1;
+$stable:                          $mwa_red;
+$button-stable-text:              #FFF;
+$item-default-active-bg:          #efe7ce;
+$menu-bg:                         $mwa_yellow_light;
+$modal-bg-color:                  $mwa_yellow_light;
+$popover-bg-color-android:        $mwa_yellow_light;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -27,6 +40,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+// Logo
+.logo {
+	text-align: center;
+	background-color: $mwa_red;
+	line-height: 10px;
+}
+
+// Banner ads
 .adsbymwa {
 	width:100%;
 	margin-top: 3px;
@@ -45,4 +66,46 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	height:250px;
 	margin: auto;
 	border: 1px solid #EEE;
+}
+
+.scroll-bar {
+  position: absolute;
+  z-index: $z-index-scroll-bar;
+}
+// hide the scroll-bar during animations
+.ng-animate .scroll-bar {
+  visibility: hidden;
+}
+.scroll-bar-h {
+  right: 2px;
+  bottom: 3px;
+  left: 2px;
+  height: 3px;
+
+  .scroll-bar-indicator {
+    height: 100%;
+  }
+}
+
+.scroll-bar-v {
+  top: 2px;
+  right: 3px;
+  bottom: 2px;
+  width: 3px;
+
+  .scroll-bar-indicator {
+    width: 100%;
+  }
+}
+.scroll-bar-indicator {
+  position: absolute;
+  border-radius: 4px;
+  background: rgba(0,0,0,0.3);
+  opacity: 1;
+
+
+  &.scroll-bar-fade-out {
+    @include transition(opacity 0.3s linear);
+    opacity: 0;
+  }
 }

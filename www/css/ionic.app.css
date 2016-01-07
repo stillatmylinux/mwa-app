@@ -17,8 +17,9 @@ $dark:                            #444 !default;
 
 Hey dork (yes, you Matt), just run
 
+glup watch
+# OR
 gulp sass
-
 
 */
 /*!
@@ -4272,7 +4273,7 @@ a.subdued {
 .bar-header {
   top: 0;
   border-top-width: 0;
-  border-bottom-width: 1px; }
+  border-bottom-width: 0px; }
   .bar-header.has-tabs-top {
     border-bottom-width: 0px;
     background-image: none; }
@@ -9726,6 +9727,11 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+.logo {
+  text-align: center;
+  background-color: #a82137;
+  line-height: 10px; }
+
 .adsbymwa {
   width: 100%;
   margin-top: 3px;
@@ -9742,3 +9748,36 @@ a.button {
   height: 250px;
   margin: auto;
   border: 1px solid #EEE; }
+
+.scroll-bar {
+  position: absolute;
+  z-index: 9999; }
+
+.ng-animate .scroll-bar {
+  visibility: hidden; }
+
+.scroll-bar-h {
+  right: 2px;
+  bottom: 3px;
+  left: 2px;
+  height: 3px; }
+  .scroll-bar-h .scroll-bar-indicator {
+    height: 100%; }
+
+.scroll-bar-v {
+  top: 2px;
+  right: 3px;
+  bottom: 2px;
+  width: 3px; }
+  .scroll-bar-v .scroll-bar-indicator {
+    width: 100%; }
+
+.scroll-bar-indicator {
+  position: absolute;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 1; }
+  .scroll-bar-indicator.scroll-bar-fade-out {
+    -webkit-transition: opacity 0.3s linear;
+    transition: opacity 0.3s linear;
+    opacity: 0; }
