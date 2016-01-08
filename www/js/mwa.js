@@ -6,10 +6,10 @@ mwa.getStateAbbr = function( id ) {
 }
 
 var mwauctions = {
-	domain: 'http://midwestauction.local',
-	port: ':10088',
-	// domain: 'http://midwestauction.com',
-	// port: '',
+	// domain: 'http://midwestauction.local',
+	// port: ':10088',
+	domain: 'http://midwestauction.com',
+	port: '',
 	adCurrent: 0,
 	ads: [],
 	adTemplate: '<div class="ad-div adsbymwa responsive"><p>Advertisement</p><div></div></div>',
