@@ -1,6 +1,12 @@
 <ion-view view-title="Categories">
+  <div class="logo"><img src="http://midwestauction.com/img/logo11-m.png"></div>
   <ion-content>
-  	<div class="logo"><img src="http://midwestauction.com/img/logo11-m.png"></div>
-    <h1>Categories</h1>
+    <ion-list>
+      <div class="ion-item-wrap" ng-repeat="cat in cats" on-auctionlist-complete>
+      	<ion-item class="category-item" href="#/app/category/{{cat.slug}}">
+      	  <h3 ng-href="cat.slug">{{cat.name}}</h3>
+      	</ion-item>
+      </div>
+    </ion-list>
   </ion-content>
 </ion-view>

@@ -1,6 +1,10 @@
 angular.module('starter.controllers', [])
 
-.controller('AuctionsCtrl', function($scope, $http) {
+.controller('AuctionsCtrl', function($scope, $http, $stateParams) {
+
+	$scope.auction_order = ($stateParams.auction_order=='sale-day') ? 'auction_datetime' : false;
+	$scope.subtitle      = ($stateParams.auction_order=='sale-day') ? 'Sale Day' : 'Recent Posts';
+
 	$http({
 		method: 'GET',
 		url: mwauctions.domain + mwauctions.port + '/auctions/list/json',
@@ -14,13 +18,14 @@ angular.module('starter.controllers', [])
 			$scope.states   = mwa.states;
 		},
 		function() {
-			alert("AJAX failed!");
+			console.log("AJAX failed!");
 		}
 	);
 
 	$scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
 		mwauctions.showAds();
 	});
+
 })
 
 .directive('adPlacement', function($window, $compile) {
@@ -52,13 +57,13 @@ angular.module('starter.controllers', [])
 	}
 })
 
-// .directive('mwaStates', function() {
-// 	console.log($scope.state)
-// 	return {
-// 		scope:{}
-// 		//type: mwa.states[state_id]
-// 	}
-// })
+.controller('StatesCtrl', function($scope) {
+	$scope.states = mwauctions.states;
+}) 
+
+.controller('CategoryCtrl', function($scope){
+	$scope.cats = mwauctions.categories;
+})
 
 .controller('FeaturedAdsCtrl', function($scope, $http, $ionicSlideBoxDelegate) {
 	$http({
@@ -73,7 +78,6 @@ angular.module('starter.controllers', [])
 			var featured_ads, fa, i, featured_images, j, image;
 
 			$scope.states = mwa.states;
-
 			featured_ads = response.data.all;
 			
 			for(i=0;i<featured_ads.length;i++) {
@@ -82,86 +86,23 @@ angular.module('starter.controllers', [])
 				for(j=0;j<featured_ads[i].featured_images.length;j++) {
 					featured_ads[i].featured_images[j] = mwauctions.domain+mwauctions.port+'/featured_images/'+featured_ads[i].featured_images[j];
 				}
-
-				console.log(featured_ads[i].featured_images)
 			}
 
-			if( featured_ads.length ) {
-				$scope.featured_ad = featured_ads[0];
-				$scope.featured_ad.imageUrl = featured_ads[0].featured_images[0];
-			}
-			
+			featured_ads = mwauctions.shuffle( featured_ads );
+			for (var i = featured_ads.length - 1; i >= 0; i--) {
+				featured_ads[i].imageUrl = featured_ads[i].featured_images[0];
+			};
+			$scope.featured_ads = featured_ads;
 			$ionicSlideBoxDelegate.update();
-			// 	featured_images_js = featured_images_js.slice(0, -1);
-
-			//}
-			/*
-<?php 
-if ( isset($this->featured_auctions[$this->count] ) ) :
-
-	$fa = $this->featured_auctions[$this->count];
-
-	$featured_images_array = explode("\n", $fa->featured_images);
-
-	$featured_images_js = '';
-	if(isset($featured_images_array) && !empty($featured_images_array)) {
-		foreach ($featured_images_array as $image) {
-			$featured_images_js .= '"/featured_images/'.trim($image).'",';
-		}
-		$featured_images_js = rtrim($featured_images_js, ",");
-	}
-?>
-<p style='text-align:center'>
-	<?php if($fa->featured_top) { ?>
-	<script type="text/javascript">
-		var featuredImgSrc = [<?php echo $featured_images_js; ?>];
-		featuredImages[++featuredImageCount] = new FlippinImage(featuredImgSrc);
-	</script>
-	<?php } else { ?>
-		<img src="/featured_images/<?php echo trim($fa->featured_images) ?>">
-	<?php } ?>
-</p>
-<h3><?php echo $fa->featured_title; ?></h3>
-<ul>
-	
-	<?php
-
-		$featured_text_array = explode("\n", $fa->featured_text);
-
-		$featured_text = '';
-		$featured_text_count = 0;
-		if(!empty($featured_text_array)) {
-			foreach ($featured_text_array as $text) {
-				$featured_text_count++;
-				if($featured_text_count != count($featured_text_array)) {
-					echo '<li>' . $this->escapeHtml(trim($text)). '</li>';
-				} else { // last item: add link
-					echo '<li><a href="'.$fa->get_permalink() . '">' . $this->escapeHtml(trim($text)). '</a></li>';
-				}
-			}
-		}
-
-	?>
-</ul>
-
-<hr>
-
-<?php
-
-endif;
-
-?>
-	*/			
-
 		},
 		function() {
-			alert("AJAX failed!");
+			console.log("AJAX failed!");
 		}
 	);
 	
 })
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http) {
 
 	// With the new view caching in Ionic, Controllers are only called
 	// when they are recreated or on app start, instead of every page change.
@@ -192,7 +133,44 @@ endif;
 
 	// Perform the login action when the user submits the login form
 	$scope.doLogin = function() {
-		console.log('Doing login', $scope.loginData);
+
+		console.log( mwauctions.domain + mwauctions.port + '/auth/token');
+
+		$http({
+			method: 'POST',
+			// url: mwauctions.domain + mwauctions.port + '/auth/token',
+			url: 'http://midwestauction.local/auth/token',
+			headers: {
+				// 'Accept': 'application/json',
+				'Access-Control-Allow-Origin': 'http://midwestauction.local', //mwauctions.domain,
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			transformRequest: function(obj) { // Zend Auth expects post data not json
+			        var str = [];
+			        for(var p in obj)
+			        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			        return str.join("&");
+			},
+			data: {
+				identity: $scope.loginData.username,
+				credential: $scope.loginData.password
+			}
+		}).then(
+			function( response ) {
+				//$scope.auctions = response.data.all;
+				console.log( response );
+
+                if(response.data.status && response.data.status == 'fail') {
+                    console.log('authentication failed');
+                } else {
+                   mwauctions.jwt.store.setJWT(response.data.jwt);
+                   mwauctions.jwt.getUserId();
+                }
+			},
+			function() {
+				console.log("AJAX failed!");
+			}
+		);
 
 		// Simulate a login delay. Remove this and replace with your login
 		// code if using a login system
@@ -200,6 +178,113 @@ endif;
 			$scope.closeLogin();
 		}, 1000);
 	};
+
+})
+
+.controller('RegisterCtrl', function($scope, $ionicModal) {
+
+
+		// Form data for the register modal
+		$scope.registerData = {
+			username: '',
+			email: '',
+			password: '',
+			password2: ''
+		};
+
+		// Create the register modal that we will use later
+		$ionicModal.fromTemplateUrl('templates/register.html', {
+			scope: $scope
+		}).then(function(modal) {
+			$scope.modal = modal;
+		});
+
+		// Triggered in the login modal to close it
+		$scope.closeRegister = function() {
+			$scope.modal.hide();
+		};
+
+		// Open the register modal
+		$scope.register = function() {
+			$scope.modal.show();
+		};
+
+		// Perform the register action when the user submits the register form
+		$scope.doRegister = function(form) {
+
+			console.log( mwauctions.domain + mwauctions.port + '/auth/token');
+
+			if(form.$valid) {
+				console.log('form is valid');
+			} else {
+				console.log('form is not valid');
+				console.log('form.password2.$error', form.password2.$error)
+			}
+
+			/*return;
+
+			$http({
+				method: 'POST',
+				// url: mwauctions.domain + mwauctions.port + '/auth/token',
+				url: 'http://midwestauction.local/auth/token',
+				headers: {
+					// 'Accept': 'application/json',
+					'Access-Control-Allow-Origin': 'http://midwestauction.local', //mwauctions.domain,
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				transformRequest: function(obj) { // Zend Auth expects post data not json
+				        var str = [];
+				        for(var p in obj)
+				        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+				        return str.join("&");
+				},
+				data: {
+					identity: $scope.registerData.username,
+					credential: $scope.registerData.email,
+					email: $scope.registerData.password
+				}
+			}).then(
+				function( response ) {
+					//$scope.auctions = response.data.all;
+					console.log( response );
+
+	                if(response.data.status && response.data.status == 'fail') {
+	                    console.log('authentication failed');
+	                } else {
+	                   mwauctions.jwt.store.setJWT(response.data.jwt);
+	                   mwauctions.jwt.getUserId();
+	                }
+				},
+				function() {
+					console.log("AJAX failed!");
+				}
+			);
+
+			// Simulate a login delay. Remove this and replace with your login
+			// code if using a login system
+			$timeout(function() {
+				$scope.closeRegister();
+			}, 1000);*/
+		};
+})
+
+.directive('compareTo', function() {
+	return {
+		require: 'ngModel',
+		scope: {
+			otherModelValue: '=compareTo'
+		},
+		link: function(scope, element, attrs, ngModel) {
+			ngModel.$validators.compareTo = function(modelValue) {
+				console.log('modeValue:', modelValue, scope.otherModelValue);
+				return modelValue === scope.otherModelValue;
+			};
+
+			scope.$watch('otherModelValue', function() {
+				ngModel.$validate();
+			});
+		}
+	}
 })
 
 .controller('PlaylistsCtrl', function($scope) {

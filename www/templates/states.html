@@ -1,6 +1,12 @@
 <ion-view view-title="States">
+  <div class="logo"><img src="http://midwestauction.com/img/logo11-m.png"></div>
   <ion-content>
-  	<div class="logo"><img src="http://midwestauction.com/img/logo11-m.png"></div>
-    <h1>States</h1>
+    <ion-list>
+      <div class="ion-item-wrap" ng-repeat="state in states | filter:{show_in_dropdown: 1}">
+      	<ion-item class="state-item" href="#/app/state/{{state.slug}}">
+      	  <center><h3>{{state.name}}</h3></center>
+      	</ion-item>
+      </div>
+    </ion-list>
   </ion-content>
 </ion-view>

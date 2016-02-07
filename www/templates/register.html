@@ -1,0 +1,60 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Register</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeRegister()">Close</button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form name="registerForm" novalidate="" ng-submit="doRegister(registerForm)">
+      <div class="list">
+        <label class="item item-input" ng-class="{ 'has-errors' : registerForm.username.$invalid && registerForm.$submitted, 'no-errors' : registerForm.username.$valid}">
+          <span class="input-label">Username</span>
+          <input type="text" name="username" ng-model="registerData.username" ng-minlength="5" ng-maxlength="20" required>
+        </label>
+
+        <div class="error-container" ng-messages-include="templates/error-list.html" ng-show="registerForm.username.$error && registerForm.$submitted" ng-messages="registerForm.username.$error"></div>
+
+        <label class="item item-input" ng-class="{ 'has-errors' : registerForm.email.$invalid && registerForm.$submitted, 'no-errors' : registerForm.email.$valid && registerForm.$submitted}">
+          <span class="input-label">Email</span>
+          <input type="text" name="email" ng-model="registerData.email" required>
+        </label>
+
+        <div class="error-container" ng-messages-include="templates/error-list.html" ng-show="registerForm.email.$error && registerForm.$submitted" ng-messages="registerForm.email.$error"></div>
+
+        <label class="item item-input" ng-class="{ 'has-errors' : registerForm.password.$invalid && registerForm.$submitted, 'no-errors' : registerForm.password.$valid && registerForm.$submitted}">
+          <span class="input-label">Password</span>
+          <input type="password" name="password" ng-model="registerData.password" ng-minlength="5" ng-maxlength="32" required>
+        </label>
+
+        <div class="error-container" ng-messages-include="templates/error-list.html" ng-show="registerForm.password.$error && registerForm.$submitted" ng-messages="registerForm.password.$error" ng-messges-multiple></div>
+
+        <label class="item item-input" ng-class="{ 'has-errors' : registerForm.password2.$invalid && registerForm.$submitted, 'no-errors' : registerForm.password2.$valid && registerForm.$submitted}">
+          <span class="input-label">Password Again</span>
+          <input type="password" name="password2" ng-model="registerData.password2" ng-minlength="5" ng-maxlength="32" compare-to="registerData.password" required>
+        </label>
+
+        <div class="error-container" ng-messages-include="templates/error-list.html" ng-show="registerForm.password2.$error && registerForm.$submitted" ng-messages="registerForm.password2.$error"></div>
+
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Register</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>
+
+<script type="text/ng-template" id="error">
+<div class="error" ng-message="required">
+  <i class="ion-information-circled"></i> 
+  This field is required!
+</div>
+<div class="error" ng-message="minlength">
+  <i class="ion-information-circled"></i> 
+  Minimum length of this field is 5 characters!
+</div>
+<div class="error" ng-message="maxlength">
+  <i class="ion-information-circled"></i> 
+  Maximum length of this field is 20 characters!
+</div>
+</script>

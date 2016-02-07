@@ -21,6 +21,7 @@ glup watch
 # OR
 gulp sass
 
+ionic serve --address m.midwestauction.local
 */
 /*!
   Ionicons, v2.0.1
@@ -9727,6 +9728,27 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+.tabs-striped.tabs-stable .tab-item.tab-item-active, .tabs-striped.tabs-stable .tab-item.active, .tabs-striped.tabs-stable .tab-item.activated {
+  color: #FFF; }
+
+.tabs-striped.tabs-stable .tab-item {
+  color: rgba(255, 255, 255, 0.7); }
+
+.bar.bar-stable {
+  background-image: none; }
+
+.tabs-striped .tabs {
+  border-bottom: 0; }
+
+.has-header {
+  top: 113px; }
+
+.menu .has-header {
+  top: 44px; }
+
+.logo {
+  margin-top: 44px; }
+
 .logo {
   text-align: center;
   background-color: #a82137;
@@ -9781,3 +9803,42 @@ a.button {
     -webkit-transition: opacity 0.3s linear;
     transition: opacity 0.3s linear;
     opacity: 0; }
+
+.bar-header {
+  background-color: #a82137; }
+  .bar-header .title {
+    color: #f7f2e1; }
+
+input[type="text"], input[type="password"] {
+  background-color: #fbf5ed; }
+
+.auction-item h3 {
+  white-space: normal; }
+
+.error-container {
+  margin: 5px 0; }
+
+.error-container:last-child {
+  margin: 5px 0 0; }
+
+.error {
+  padding: 10px 16px;
+  font-family: "Arial Black", Gadget, sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #555;
+  vertical-align: middle; }
+
+.error i {
+  font-size: 24px;
+  color: #B83E2C;
+  vertical-align: middle; }
+
+.last-error-container > .error {
+  padding: 10px 16px 0; }
+
+.has-errors {
+  border-bottom: 3px solid #B83E2C; }
+
+.no-errors {
+  border-bottom: 3px solid green; }

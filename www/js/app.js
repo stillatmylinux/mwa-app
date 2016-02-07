@@ -4,7 +4,12 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
+
+.config(function($ionicConfigProvider) {
+  
+  $ionicConfigProvider.tabs.position('bottom');
+})
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -37,7 +42,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     url: 'states',
     views: {
       'menuContent': {
-        templateUrl: 'templates/states.html'
+        templateUrl: 'templates/states.html',
+        controller: 'StatesCtrl'
       }
     }
   })
@@ -46,7 +52,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       url: 'categories',
       views: {
         'menuContent': {
-          templateUrl: 'templates/categories.html'
+          templateUrl: 'templates/categories.html',
+          controller: 'CategoryCtrl'
         }
       }
     })
@@ -81,7 +88,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   })
 
   .state('app.auctions', {
-    url: 'auctions',
+    url: 'auctions/:auction_order',
     views: {
       'menuContent': {
         templateUrl: 'templates/auctions.html',

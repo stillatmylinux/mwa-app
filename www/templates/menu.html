@@ -22,8 +22,8 @@
 						</button>
 				</ion-nav-buttons>
 		</ion-nav-bar>
-		<ion-tabs class="tabs-stable">
-				<ion-tab title="Recent Postings" href="#/auctions">
+		<ion-tabs class="tabs-stable" ng-controller="AuctionsCtrl">
+				<ion-tab title="Recent Posts" href="#/auctions/">
 				</ion-tab>
 				<ion-tab title="Sale Day" href="#/auctions/sale-day">
 				</ion-tab>
@@ -39,7 +39,7 @@
 				<ion-item menu-close href="#/featured">
 					Featured
 				</ion-item>
-				<ion-item menu-close href="#/auctions">
+				<ion-item menu-close href="#/auctions/">
 					Auctions
 				</ion-item>
 				<ion-item menu-close href="#/categories">
@@ -50,6 +50,9 @@
 				</ion-item>
 				<ion-item menu-close ng-click="login()">
 					Login
+				</ion-item>
+				<ion-item menu-close ng-click="register()">
+					Register
 				</ion-item>
 			</ion-list>
 		</ion-content>

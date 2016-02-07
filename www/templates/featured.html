@@ -1,26 +1,26 @@
 <ion-view view-title="Featured Auctions">
-	<ion-content>
-		<div class="logo"><img src="http://midwestauction.com/img/logo11-m.png"></div>
+	<div class="logo"><img src="http://midwestauction.com/img/logo11-m.png"></div>
+	<ion-content cache-view="true">
 		
-		<div class="list card">
+		<div class="list card" ng-repeat="f in featured_ads">
 
 			<div class="item item-avatar">
-				<img src="{{featured_ad.imageUrl}}">
-				<h2>{{featured_ad.auction_city}}, {{featured_ad.auction_state}}</h2>
-				<p>{{featured_ad.start_time}}</p>
+				<img ng-src="{{f.imageUrl}}">
+				<h2>{{f.auction_city}}, {{f.auction_state}}</h2>
+				<p>{{f.start_time}}</p>
 			</div>
 
 			<div class="item item-body">
 				<ion-slide-box does-continue="true" auto-play="true">
-				  <ion-slide ng-repeat="img in featured_ad.featured_images">
+				  <ion-slide ng-repeat="img in f.featured_images">
 				    <img class="full-image" ng-src="{{img}}">
 				  </ion-slide>
 				</ion-slide-box>
 				<p>
-					{{featured_ad.featured_text}}
+					{{f.featured_text}}
 				</p>
 				<p>
-					{{featured_ad.call_info}}
+					{{f.call_info}}
 				</p>
 				<p>
 					<a href="#" class="subdued">1 Like</a>
@@ -42,7 +42,6 @@
 					Share
 				</a>
 			</div>
-
 		</div>
 	</ion-content>
 </ion-view>
