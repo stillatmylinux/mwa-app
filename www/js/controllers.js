@@ -134,14 +134,14 @@ angular.module('starter.controllers', [])
 	// Perform the login action when the user submits the login form
 	$scope.doLogin = function() {
 
-		console.log( mwauctions.domain + mwauctions.port + '/auth/token');
+		console.log( mwauctions.domain + mwauctions.port + '/auth/token/login');
 
 		$http({
 			method: 'POST',
-			// url: mwauctions.domain + mwauctions.port + '/auth/token',
-			url: 'http://midwestauction.local/auth/token',
+			// url: mwauctions.domain + mwauctions.port + '/auth/token/login',
+			url: 'http://midwestauction.local/auth/token/login',
 			headers: {
-				// 'Accept': 'application/json',
+				'Accept': 'application/json',
 				'Access-Control-Allow-Origin': 'http://midwestauction.local', //mwauctions.domain,
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
@@ -181,7 +181,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('RegisterCtrl', function($scope, $ionicModal) {
+.controller('RegisterCtrl', function($scope, $ionicModal, $timeout, $http) {
 
 
 		// Form data for the register modal
@@ -199,6 +199,13 @@ angular.module('starter.controllers', [])
 			$scope.modal = modal;
 		});
 
+		$scope.fillTestForm = function() {
+			$scope.registerData.username = "mama123";
+			$scope.registerData.email = "mama123@gmail.com";
+			$scope.registerData.password = "123456";
+			$scope.registerData.password2 = "123456";
+		}
+
 		// Triggered in the login modal to close it
 		$scope.closeRegister = function() {
 			$scope.modal.hide();
@@ -212,59 +219,54 @@ angular.module('starter.controllers', [])
 		// Perform the register action when the user submits the register form
 		$scope.doRegister = function(form) {
 
-			console.log( mwauctions.domain + mwauctions.port + '/auth/token');
+			console.log( mwauctions.domain + mwauctions.port + '/auth/token/register');
 
 			if(form.$valid) {
-				console.log('form is valid');
-			} else {
-				console.log('form is not valid');
-				console.log('form.password2.$error', form.password2.$error)
+				$http({
+					method: 'POST',
+					// url: mwauctions.domain + mwauctions.port + '/auth/token/register',
+					url: 'http://midwestauction.local/auth/token/register',
+					headers: {
+						//'Accept': 'application/json',
+						'Access-Control-Allow-Origin': 'http://midwestauction.local',
+						'Content-Type': 'application/x-www-form-urlencoded'
+						/**
+						 * Access-Control-Allow-Origin
+						 * Will error if you try to login in first
+						 * and then try to register.
+						 * @TODO disable registration if logged in
+						 */
+					},
+					data: {
+						username: $scope.registerData.username,
+						email: $scope.registerData.email,
+						display_name: '',
+						password: $scope.registerData.password
+					}
+				}).then(
+					function( response ) {
+						// //$scope.auctions = response.data.all;
+						console.log( response );
+
+		                if(response.data.status && response.data.status == 'fail') {
+		                    console.log('registration failed');
+		                } else {
+		                	console.log('registration success!', response);
+		                    mwauctions.jwt.store.setJWT(response.data.jwt);
+		                    // mwauctions.jwt.registerUser();
+		                }
+					},
+					function() {
+						console.log("AJAX failed for regisration!");
+					}
+				);
+
+				// Simulate a login delay. Remove this and replace with your login
+				// code if using a login system
+				$timeout(function() {
+					$scope.closeRegister();
+				}, 1000);
 			}
-
-			/*return;
-
-			$http({
-				method: 'POST',
-				// url: mwauctions.domain + mwauctions.port + '/auth/token',
-				url: 'http://midwestauction.local/auth/token',
-				headers: {
-					// 'Accept': 'application/json',
-					'Access-Control-Allow-Origin': 'http://midwestauction.local', //mwauctions.domain,
-					'Content-Type': 'application/x-www-form-urlencoded'
-				},
-				transformRequest: function(obj) { // Zend Auth expects post data not json
-				        var str = [];
-				        for(var p in obj)
-				        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-				        return str.join("&");
-				},
-				data: {
-					identity: $scope.registerData.username,
-					credential: $scope.registerData.email,
-					email: $scope.registerData.password
-				}
-			}).then(
-				function( response ) {
-					//$scope.auctions = response.data.all;
-					console.log( response );
-
-	                if(response.data.status && response.data.status == 'fail') {
-	                    console.log('authentication failed');
-	                } else {
-	                   mwauctions.jwt.store.setJWT(response.data.jwt);
-	                   mwauctions.jwt.getUserId();
-	                }
-				},
-				function() {
-					console.log("AJAX failed!");
-				}
-			);
-
-			// Simulate a login delay. Remove this and replace with your login
-			// code if using a login system
-			$timeout(function() {
-				$scope.closeRegister();
-			}, 1000);*/
 		};
 })
 
@@ -276,7 +278,6 @@ angular.module('starter.controllers', [])
 		},
 		link: function(scope, element, attrs, ngModel) {
 			ngModel.$validators.compareTo = function(modelValue) {
-				console.log('modeValue:', modelValue, scope.otherModelValue);
 				return modelValue === scope.otherModelValue;
 			};
 

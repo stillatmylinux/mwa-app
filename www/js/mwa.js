@@ -141,27 +141,30 @@ var mwauctions = {
       }
     },
     getUserId: function(){
-        $.ajax({
-            url: 'http://midwestauction.local/resource/image',
-            beforeSend: function(request){
-                request.setRequestHeader('Authorization', 'Bearer ' + mwauctions.jwt.store.JWT);
-            },
-            type: 'GET',
-            success: function(data) {
-                // Decode and show the returned data nicely.
-                if( data && data.user_id ) {
-                  console.log(data.user_id);
-                    //$('#chicken-dinner').html('<div>'+data.user_id+'</div>');
-                } else if( data && data.fail ) {
-                  console.log(data.fail);
-                    //$('#chicken-dinner').html('<div>'+data.fail+'</div>');
-                }
+        // $.ajax({
+        //     url: 'http://midwestauction.local/resource/image',
+        //     beforeSend: function(request){
+        //         request.setRequestHeader('Authorization', 'Bearer ' + mwauctions.jwt.store.JWT);
+        //     },
+        //     type: 'GET',
+        //     success: function(data) {
+        //         // Decode and show the returned data nicely.
+        //         if( data && data.user_id ) {
+        //           console.log(data.user_id);
+        //             //$('#chicken-dinner').html('<div>'+data.user_id+'</div>');
+        //         } else if( data && data.fail ) {
+        //           console.log(data.fail);
+        //             //$('#chicken-dinner').html('<div>'+data.fail+'</div>');
+        //         }
                 
-            },
-            error: function(e) {
-                throw e.responseText;
-            }
-        });
+        //     },
+        //     error: function(e) {
+        //         throw e.responseText;
+        //     }
+        // });
+    },
+    registerUser: function() {
+      console.log('registerUser');
     }
   }
 }

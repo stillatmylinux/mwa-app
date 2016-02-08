@@ -8,7 +8,7 @@
   <ion-content>
     <form name="registerForm" novalidate="" ng-submit="doRegister(registerForm)">
       <div class="list">
-        <label class="item item-input" ng-class="{ 'has-errors' : registerForm.username.$invalid && registerForm.$submitted, 'no-errors' : registerForm.username.$valid}">
+        <label class="item item-input" ng-class="{ 'has-errors' : registerForm.username.$invalid && registerForm.$submitted, 'no-errors' : registerForm.username.$valid && registerForm.$submitted}">
           <span class="input-label">Username</span>
           <input type="text" name="username" ng-model="registerData.username" ng-minlength="5" ng-maxlength="20" required>
         </label>
@@ -37,24 +37,11 @@
         <div class="error-container" ng-messages-include="templates/error-list.html" ng-show="registerForm.password2.$error && registerForm.$submitted" ng-messages="registerForm.password2.$error"></div>
 
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Register</button>
+          <button class="button button-block button-stable" type="submit">Register</button>
         </label>
       </div>
     </form>
+
+    <button class="button button-block button-stable" ng-click="fillTestForm()">Fill Test Form</button>
   </ion-content>
 </ion-modal-view>
-
-<script type="text/ng-template" id="error">
-<div class="error" ng-message="required">
-  <i class="ion-information-circled"></i> 
-  This field is required!
-</div>
-<div class="error" ng-message="minlength">
-  <i class="ion-information-circled"></i> 
-  Minimum length of this field is 5 characters!
-</div>
-<div class="error" ng-message="maxlength">
-  <i class="ion-information-circled"></i> 
-  Maximum length of this field is 20 characters!
-</div>
-</script>
