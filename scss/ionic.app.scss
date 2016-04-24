@@ -65,15 +65,16 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   top: 44px;
 }
 
-.logo {
-  margin-top: 44px;
-}
-
 // Logo
 .logo {
 	text-align: center;
 	background-color: $mwa_red;
 	line-height: 10px;
+  margin-top: 44px;
+}
+
+.logo img {
+  width: 100%;
 }
 
 // Banner ads

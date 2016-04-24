@@ -9747,12 +9747,13 @@ a.button {
   top: 44px; }
 
 .logo {
-  margin-top: 44px; }
-
-.logo {
   text-align: center;
   background-color: #a82137;
-  line-height: 10px; }
+  line-height: 10px;
+  margin-top: 44px; }
+
+.logo img {
+  width: 100%; }
 
 .adsbymwa {
   width: 100%;
