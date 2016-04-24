@@ -161,22 +161,22 @@ angular.module('starter.controllers', [])
 				console.log( response );
 
                 if(response.data.status && response.data.status == 'fail') {
-                    console.log('authentication failed');
+                	if( response.data.msg ) {
+                		console.log( response.data.msg );
+                		console.log($scope.loginData);
+                	} else {
+						console.log('authentication failed . . .');
+                	}
                 } else {
                    mwauctions.jwt.store.setJWT(response.data.jwt);
                    mwauctions.jwt.getUserId();
+                   $scope.closeLogin();
                 }
 			},
 			function() {
 				console.log("AJAX failed!");
 			}
 		);
-
-		// Simulate a login delay. Remove this and replace with your login
-		// code if using a login system
-		$timeout(function() {
-			$scope.closeLogin();
-		}, 1000);
 	};
 
 })
@@ -187,6 +187,7 @@ angular.module('starter.controllers', [])
 		// Form data for the register modal
 		$scope.registerData = {
 			username: '',
+			display_name: '',
 			email: '',
 			password: '',
 			password2: ''
@@ -240,7 +241,7 @@ angular.module('starter.controllers', [])
 					data: {
 						username: $scope.registerData.username,
 						email: $scope.registerData.email,
-						display_name: '',
+						display_name: $scope.registerData.username,
 						password: $scope.registerData.password
 					}
 				}).then(
@@ -254,18 +255,13 @@ angular.module('starter.controllers', [])
 		                	console.log('registration success!', response);
 		                    mwauctions.jwt.store.setJWT(response.data.jwt);
 		                    // mwauctions.jwt.registerUser();
+		                    $scope.closeRegister();
 		                }
 					},
 					function() {
 						console.log("AJAX failed for regisration!");
 					}
 				);
-
-				// Simulate a login delay. Remove this and replace with your login
-				// code if using a login system
-				$timeout(function() {
-					$scope.closeRegister();
-				}, 1000);
 			}
 		};
 })
