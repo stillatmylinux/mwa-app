@@ -84,7 +84,7 @@ angular.module('starter.controllers', [])
 				featured_ads[i].auction_state = mwa.getStateAbbr(featured_ads[i].auction_state_id);
 				featured_ads[i].start_time = new Date(featured_ads[i].auction_datetime).format("%A, %b %d, %Y @ %l:%M %P");
 				for(j=0;j<featured_ads[i].featured_images.length;j++) {
-					featured_ads[i].featured_images[j] = mwauctions.domain+mwauctions.port+'/featured_images/'+featured_ads[i].featured_images[j];
+					featured_ads[i].featured_images[j] = mwauctions.mdomain+mwauctions.port+'/mobile/featured_images/'+featured_ads[i].featured_images[j];
 				}
 			}
 

@@ -99,7 +99,10 @@ var mwauctions = {
     {id:51,name:'Wyoming',slug:'wyoming',abbr:'WY',nickname:'Wyo.',use_nickname:0,show_in_dropdown:1}
   ],
 	showAds: function() {
-		jQuery('.adsbymwa div').each(function(index,ele) {
+    jQuery('.adsbymwa div').each(function(index,ele) {
+      if(mwauctions.adCurrent % 4 == 0) {
+        mwauctions.adCurrent = 0;
+      }
 			jQuery(ele).html(mwauctions.ads[mwauctions.adCurrent++]);
 		});
 	},

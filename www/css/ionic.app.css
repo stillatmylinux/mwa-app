@@ -9769,7 +9769,8 @@ a.button {
   width: 300px;
   height: 250px;
   margin: auto;
-  border: 1px solid #EEE; }
+  border: 1px solid #EEE;
+  text-align: center; }
 
 .scroll-bar {
   position: absolute;
