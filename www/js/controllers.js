@@ -134,15 +134,15 @@ angular.module('starter.controllers', [])
 	// Perform the login action when the user submits the login form
 	$scope.doLogin = function() {
 
-		console.log( mwauctions.domain + mwauctions.port + '/auth/token/login');
+		// console.log( mwauctions.domain + mwauctions.port + '/auth/token/login');
 
 		$http({
 			method: 'POST',
 			// url: mwauctions.domain + mwauctions.port + '/auth/token/login',
-			url: 'http://midwestauction.local/auth/token/login',
+			url: 'https://midwestauction.com/auth/token/login',
 			headers: {
 				'Accept': 'application/json',
-				'Access-Control-Allow-Origin': 'http://midwestauction.local', //mwauctions.domain,
+				'Access-Control-Allow-Origin': 'https://midwestauction.com',
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
 			transformRequest: function(obj) { // Zend Auth expects post data not json
@@ -226,10 +226,10 @@ angular.module('starter.controllers', [])
 				$http({
 					method: 'POST',
 					// url: mwauctions.domain + mwauctions.port + '/auth/token/register',
-					url: 'http://midwestauction.local/auth/token/register',
+					url: 'https://midwestauction.com/auth/token/register',
 					headers: {
 						//'Accept': 'application/json',
-						'Access-Control-Allow-Origin': 'http://midwestauction.local',
+						'Access-Control-Allow-Origin': 'https://midwestauction.com',
 						'Content-Type': 'application/x-www-form-urlencoded'
 						/**
 						 * Access-Control-Allow-Origin

@@ -6,9 +6,8 @@ mwa.getStateAbbr = function( id ) {
 }
 
 var mwauctions = {
-	// domain: 'http://midwestauction.local',
-	// port: '',
-	domain: 'http://midwestauction.com',
+	domain: 'https://midwestauction.com',
+  mdomain: 'https://m.midwestauction.com',
 	port: '',
 	adCurrent: 0,
 	ads: [],
