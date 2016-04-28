@@ -93,6 +93,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
     }
   })
 
+  .state('app.auction', {
+    url: 'auction/:auctionId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/auction.html',
+        controller: 'AuctionCtrl'
+      }
+    }
+  })
+
   ;
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('featured');

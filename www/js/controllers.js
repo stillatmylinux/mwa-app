@@ -1,5 +1,9 @@
 angular.module('starter.controllers', [])
 
+.controller('AuctionCtrl', function($scope) {
+	// $scope.auction = mwauctions.all[6];
+})
+
 .controller('AuctionsCtrl', function($scope, $http, $stateParams) {
 
 	$scope.auction_order = ($stateParams.auction_order=='sale-day') ? 'auction_datetime' : false;
@@ -14,7 +18,19 @@ angular.module('starter.controllers', [])
 		}
 	}).then(
 		function( response ) {
-			$scope.auctions = response.data.all;
+
+			var auctions = response.data.all;
+
+			for(i=0;i<auctions.length;i++) {
+				if( auctions[i].external_auction_link === '' ) {
+					auctions[i].url = '#/auction/' + auctions[i].id;
+				} else {
+					auctions[i].url = auctions[i].external_auction_link;
+				}
+			}
+
+			mwauctions.all = auctions;
+			$scope.auctions = auctions;
 			$scope.states   = mwa.states;
 		},
 		function() {

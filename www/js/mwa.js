@@ -11,6 +11,7 @@ var mwauctions = {
 	port: '',
 	adCurrent: 0,
 	ads: [],
+	all: [],
 	adTemplate: '<div class="ad-div adsbymwa responsive"><p>Advertisement</p><div></div></div>',
   categories: [
     {id:1,slug:'airplanes-helicopters',name:'Airplanes, helicopters'},
