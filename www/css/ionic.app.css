@@ -9817,6 +9817,9 @@ input[type="text"], input[type="password"] {
 .auction-item h3 {
   white-space: normal; }
 
+.pane.auction {
+  margin-top: 44px; }
+
 .error-container {
   margin: 5px 0; }
 

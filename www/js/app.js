@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages', 'starter.auctions.service', 'starter.utils.service'])
 
 .config(function($ionicConfigProvider) {
   
@@ -31,7 +31,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
     url: '/',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
+    controller: 'AppCtrl',
   })
 
   .state('app.states', {
@@ -90,7 +90,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
         templateUrl: 'templates/auctions.html',
         controller: 'AuctionsCtrl'
       }
-    }
+    },
+    resolve: {
+      auctions: ['auctions',
+        function(auctions){
+          return auctions.all();
+        }]
+    },
   })
 
   .state('app.auction', {
@@ -100,10 +106,68 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages'])
         templateUrl: 'templates/auction.html',
         controller: 'AuctionCtrl'
       }
-    }
+    },
+    resolve: {
+      auctions: ['auctions',
+        function(auctions){
+          return auctions.all();
+        }]
+    },
   })
 
   ;
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('featured');
 });
+
+angular.module('starter.auctions.service', [
+
+])
+// A RESTful factory for retrieving auctions from db
+.factory('auctions', ['$http', 'utils', function ($http, utils) {
+  var auctions = $http({
+    method: 'GET',
+    url: mwauction.domain + mwauction.port + '/auctions/list/json',
+    headers: {
+      'Accept': 'application/json',
+      'Access-Control-Allow-Origin': mwauction.domain
+    }
+  }).then(function (resp) {
+    return resp.data.all;
+  });
+
+  var factory = {};
+  factory.all = function () {
+    return auctions;
+  };
+  factory.get = function (id) {
+    return auctions.then(function(){
+      return utils.findById(auctions, id);
+    })
+  };
+  return factory;
+}]);
+
+angular.module('starter.utils.service', [
+
+])
+.factory('utils', function () {
+  return {
+    // Util for finding an object by its 'id' property among an array
+    findById: function findById(a, id) {
+      for (var i = 0; i < a.length; i++) {
+        if (a[i].id == id) return a[i];
+      }
+      return null;
+    },
+
+    // Util for returning a random key from a collection that also isn't the current key
+    newRandomKey: function newRandomKey(coll, key, currentKey){
+      var randKey;
+      do {
+        randKey = coll[Math.floor(coll.length * Math.random())][key];
+      } while (randKey == currentKey);
+      return randKey;
+    }
+  };
+})
