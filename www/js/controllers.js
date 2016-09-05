@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['ui.router'])
+angular.module('mwaApp.controllers', ['ui.router'])
 
 .controller('AuctionCtrl', ['$scope', 'auctions', 'utils', '$stateParams', function($scope, auctions, utils, $stateParams) {
 

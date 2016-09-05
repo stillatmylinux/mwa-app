@@ -1,10 +1,10 @@
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
+// 'mwaApp' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages', 'starter.auctions.service', 'starter.utils.service'])
+// 'mwaApp.controllers' is found in controllers.js
+angular.module('mwaApp', ['ionic', 'mwaApp.controllers', 'ngMessages', 'mwaApp.auctions.service', 'mwaApp.utils.service'])
 
 .config(function($ionicConfigProvider) {
   
@@ -120,7 +120,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngMessages', 'starte
   $urlRouterProvider.otherwise('featured');
 });
 
-angular.module('starter.auctions.service', [
+angular.module('mwaApp.auctions.service', [
 
 ])
 // A RESTful factory for retrieving auctions from db
@@ -149,7 +149,7 @@ angular.module('starter.auctions.service', [
   return factory;
 }]);
 
-angular.module('starter.utils.service', [
+angular.module('mwaApp.utils.service', [
 
 ])
 .factory('utils', function () {
