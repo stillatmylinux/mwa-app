@@ -9755,6 +9755,10 @@ a.button {
 .logo img {
   width: 100%; }
 
+.mwa-item img {
+  max-width: 100%;
+}
+
 .adsbymwa {
   width: 100%;
   margin-top: 3px;

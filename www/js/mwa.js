@@ -102,13 +102,7 @@ var mwauction = {
 	],
 	events: {
 		listen: function() {
-			// this.$.body = $('body');
-			// this.$.body
-			// 	.on('click', '.auction-item a.auction-item' function(e) {
-			// 		e.preventDefault();
-			// 		console.debug(e.target);
-			// 		parent.postMessage(e.target, '*');
-			// 	});
+			
 		}
 	},
 	showAds: function() {
@@ -191,6 +185,9 @@ $(document).ready( function() {
 
 /**
  * https://github.com/brightbits/formatDate-js
+ *
+ * var myTime = new Date();
+ * myTime.format("%H:%M on %d/%m");
  */
 (function () {
 	var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };

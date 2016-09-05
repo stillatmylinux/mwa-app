@@ -2,9 +2,29 @@ angular.module('starter.controllers', ['ui.router'])
 
 .controller('AuctionCtrl', ['$scope', 'auctions', 'utils', '$stateParams', function($scope, auctions, utils, $stateParams) {
 
-	$scope.subtitle = '-------';
-
 	$scope.auction = utils.findById(auctions, 7331);
+
+	$scope.subtitle = $scope.auction.seller;
+
+	var f_date = new Date($scope.auction.auction_datetime + ' ' + $scope.auction.auction_time);
+	$scope.auction.auction_datetime = f_date.format('%A, %b. %d');
+
+	$scope.location = ($scope.auction.auction_state_id) ? $scope.auction.auction_city+', '+$scope.auction.auction_state_abbr : 'Online only';
+
+	// ionic events: http://ionicframework.com/docs/api/directive/ionView/
+	$scope.$on('$ionicView.loaded', function(event, data){
+		$('body').on('click', '.mwa-item a', function(e) {
+					e.preventDefault();
+					if(e.target.href.indexOf('midwestauction.com') > 1) {
+						$(e.target).addClass('external');
+						parent.postMessage({auction:{url:link}}, '*');
+					} else {
+						window.open(e.target, '_blank');
+					}
+				});
+	});
+
+
 }])
 
 .controller('AuctionsCtrl', ['$scope', '$http', '$stateParams', 'auctions', function($scope, $http, $stateParams, auctions) {
@@ -16,10 +36,13 @@ angular.module('starter.controllers', ['ui.router'])
 		if(link[0] == '#') {
 			location.href = link;
 		} else {
-			if(window.parent) {
-				parent.postMessage({auction:{url:link}}, '*');
-			} else {
+			if(window.parent &&
+			   window.parent.location &&
+			   window.parent.location.href &&
+			   window.parent.location.href == location.href) {
 				window.open(link, '_blank');
+			} else {
+				parent.postMessage({auction:{url:link}}, '*');
 			}
 		}
 	};

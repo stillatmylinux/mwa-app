@@ -2,11 +2,20 @@
   <div class="logo"><img src="https://m.midwestauction.com/img/logo11-m.png"></div>
   <ion-content cache-view="true">
     <ion-list>
-      <div class="ion-item-wrap">
-  		<span class="date">{{auction.auction_datetime}}</span>
-  	  	<span class="location">{{auction.auction_city}}, <span>{{states[auction.auction_state_id]}}</span>
-  	  	<h3>{{auction.auction_short_title}}</h3>
+      <div class="ion-item-wrap mwa-item">
+      	<center>
+  			<h3 class="date">{{auction.auction_datetime}}</h3>
+  	  		<h2 class="location">{{location}}</span></h2>
+  	  	</center>
+  	  	<h3>{{auction.auction_long_title}}</h3>
+  	  	<p ng-bind-html="auction.content"></p>
       </div>
     </ion-list>
   </ion-content>
 </ion-view>
+<style type="text/css">
+
+img {
+	max-width: 100%;
+}
+</style>

@@ -125,6 +125,7 @@ angular.module('starter.auctions.service', [
 ])
 // A RESTful factory for retrieving auctions from db
 .factory('auctions', ['$http', 'utils', function ($http, utils) {
+
   var auctions = $http({
     method: 'GET',
     url: mwauction.domain + mwauction.port + '/auctions/list/json',
@@ -168,6 +169,8 @@ angular.module('starter.utils.service', [
         randKey = coll[Math.floor(coll.length * Math.random())][key];
       } while (randKey == currentKey);
       return randKey;
-    }
+    },
+
+
   };
 })
