@@ -59,6 +59,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 .has-header {
   top: 113px;
+  bottom: 50px;
 }
 
 .menu .has-header {
@@ -97,6 +98,17 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 	margin: auto;
 	border: 1px solid #EEE;
   text-align: center;
+}
+
+.ion-item-wrap.mwa-item h1,
+.ion-item-wrap.mwa-item h1 a {
+    font-size: 24px;
+    color: #a82137;
+    text-align: center;
+}
+
+.mwa-item img {
+  max-width: 100%;
 }
 
 .scroll-bar {

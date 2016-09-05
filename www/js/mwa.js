@@ -100,9 +100,12 @@ var mwauction = {
 		{id:50,name:'Wisconsin',slug:'wisconsin',abbr:'WI',nickname:'Wisc.',use_nickname:0,show_in_dropdown:1},
 		{id:51,name:'Wyoming',slug:'wyoming',abbr:'WY',nickname:'Wyo.',use_nickname:0,show_in_dropdown:1}
 	],
-	events: {
-		listen: function() {
-			
+	logo: {
+		fixLayout: function() {
+			var top = parseInt($('.pane .logo').css('margin-top'));
+			var height = parseInt($('.pane .logo img').css('height'));
+
+			$('.scroll-content').css('top', 10+top+height+'px');
 		}
 	},
 	showAds: function() {
@@ -289,3 +292,6 @@ $(document).ready( function() {
 		}, this));
 	};
 }).call(this);
+
+$(document).on('ready', mwauction.logo.fixLayout);
+$(window).on('resize', mwauction.logo.fixLayout);

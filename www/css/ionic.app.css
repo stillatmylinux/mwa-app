@@ -9741,7 +9741,8 @@ a.button {
   border-bottom: 0; }
 
 .has-header {
-  top: 113px; }
+  top: 113px;
+  bottom: 50px; }
 
 .menu .has-header {
   top: 44px; }
@@ -9754,10 +9755,6 @@ a.button {
 
 .logo img {
   width: 100%; }
-
-.mwa-item img {
-  max-width: 100%;
-}
 
 .adsbymwa {
   width: 100%;
@@ -9776,6 +9773,15 @@ a.button {
   margin: auto;
   border: 1px solid #EEE;
   text-align: center; }
+
+.ion-item-wrap.mwa-item h1,
+.ion-item-wrap.mwa-item h1 a {
+  font-size: 24px;
+  color: #a82137;
+  text-align: center; }
+
+.mwa-item img {
+  max-width: 100%; }
 
 .scroll-bar {
   position: absolute;

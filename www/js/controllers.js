@@ -2,7 +2,7 @@ angular.module('mwaApp.controllers', ['ui.router'])
 
 .controller('AuctionCtrl', ['$scope', 'auctions', 'utils', '$stateParams', function($scope, auctions, utils, $stateParams) {
 
-	$scope.auction = utils.findById(auctions, 7331);
+	$scope.auction = utils.findById(auctions, $stateParams.auctionId);
 
 	$scope.subtitle = $scope.auction.seller;
 
@@ -14,14 +14,14 @@ angular.module('mwaApp.controllers', ['ui.router'])
 	// ionic events: http://ionicframework.com/docs/api/directive/ionView/
 	$scope.$on('$ionicView.loaded', function(event, data){
 		$('body').on('click', '.mwa-item a', function(e) {
-					e.preventDefault();
-					if(e.target.href.indexOf('midwestauction.com') > 1) {
-						$(e.target).addClass('external');
-						parent.postMessage({auction:{url:link}}, '*');
-					} else {
-						window.open(e.target, '_blank');
-					}
-				});
+			e.preventDefault();
+			if(e.target.href.indexOf('midwestauction.com') > 1) {
+				$(e.target).addClass('external');
+				parent.postMessage({auction:{url:link}}, '*');
+			} else {
+				window.open(e.target, '_blank');
+			}
+		});
 	});
 
 
@@ -47,52 +47,28 @@ angular.module('mwaApp.controllers', ['ui.router'])
 		}
 	};
 
-	for(i=0;i<auctions.length;i++) {
-		if( auctions[i].external_auction_link === '' ) {
-			auctions[i].url = '#/auction/' + auctions[i].id;
-		} else {
-			auctions[i].url = auctions[i].external_auction_link;
-		}
-	}
-
-	mwauction.all = auctions;
-	$scope.auctions = auctions;
-	$scope.states   = mwa.states;
-
-	// $http({
-	// 	method: 'GET',
-	// 	url: mwauction.domain + mwauction.port + '/auctions/list/json',
-	// 	headers: {
-	// 		'Accept': 'application/json',
-	// 		'Access-Control-Allow-Origin': mwauction.domain
-	// 	}
-	// }).then(
-	// 	function( response ) {
-
-	// 		var auctions = response.data.all;
-
-	// 		for(i=0;i<auctions.length;i++) {
-	// 			if( auctions[i].external_auction_link === '' ) {
-	// 				auctions[i].url = '#/auction/' + auctions[i].id;
-	// 			} else {
-	// 				auctions[i].url = auctions[i].external_auction_link;
-	// 			}
-	// 		}
-
-	// 		mwauction.all = auctions;
-	// 		$scope.auctions = auctions;
-	// 		$scope.states   = mwa.states;
-	// 	},
-	// 	function() {
-	// 		console.log("AJAX failed!");
-	// 	}
-	// );
+    $scope.auctions = auctions;
+    $scope.states   = mwa.states;	
 
 	$scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
 		mwauction.showAds();
 	});
 
 }])
+
+.directive('onAuctionlistComplete', function($timeout) {
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs, $window) {
+			if(scope.$last === true) {
+				$timeout(function() {
+					scope.$emit('ngRepeatFinished');
+				});
+			}
+
+		}
+	}
+})
 
 .directive('adPlacement', function($window, $compile) {
 	return {
@@ -110,19 +86,6 @@ angular.module('mwaApp.controllers', ['ui.router'])
 	}
 })
 
-.directive('onAuctionlistComplete', function($timeout) {
-	return {
-		restrict: 'A',
-		link: function(scope, element, attrs, $window) {
-			if(scope.$last === true) {
-				$timeout(function() {
-					scope.$emit('ngRepeatFinished');
-				});
-			}
-
-		}
-	}
-})
 
 .controller('StatesCtrl', function($scope) {
 	$scope.states = mwauction.states;

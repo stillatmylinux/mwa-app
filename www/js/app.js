@@ -4,7 +4,7 @@
 // 'mwaApp' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'mwaApp.controllers' is found in controllers.js
-angular.module('mwaApp', ['ionic', 'mwaApp.controllers', 'ngMessages', 'mwaApp.auctions.service', 'mwaApp.utils.service'])
+angular.module('mwaApp', ['ionic', 'mwaApp.controllers', 'ngMessages', 'mwaApp.auctions.service', 'mwaApp.utils.service', 'mwaApp.states.service'])
 
 .config(function($ionicConfigProvider) {
   
@@ -134,7 +134,16 @@ angular.module('mwaApp.auctions.service', [
       'Access-Control-Allow-Origin': mwauction.domain
     }
   }).then(function (resp) {
-    return resp.data.all;
+    var _auctions = resp.data.all;
+    for(i=0;i<_auctions.length;i++) {
+      if( _auctions[i].external_auction_link === '' ) {
+        _auctions[i].url = '#/auction/' + _auctions[i].id;
+      } else {
+        _auctions[i].url = _auctions[i].external_auction_link;
+      }
+    }
+
+    return _auctions;
   });
 
   var factory = {};
@@ -173,4 +182,22 @@ angular.module('mwaApp.utils.service', [
 
 
   };
-})
+});
+
+angular.module('mwaApp.states.service', [
+
+])
+// A RESTful factory for retrieving auctions from db
+.factory('states', ['$http', 'utils', function ($http, utils) {
+
+  var states = mwauction.states;
+
+  var factory = {};
+  factory.all = function () {
+    return states;
+  };
+  factory.get = function (id) {
+    return states[id];
+  };
+  return factory;
+}]);
