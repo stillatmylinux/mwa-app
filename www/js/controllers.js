@@ -13,15 +13,7 @@ angular.module('mwaApp.controllers', ['ui.router'])
 
 	// ionic events: http://ionicframework.com/docs/api/directive/ionView/
 	$scope.$on('$ionicView.loaded', function(event, data){
-		$('body').on('click', '.mwa-item a', function(e) {
-			e.preventDefault();
-			if(e.target.href.indexOf('midwestauction.com') > 1) {
-				$(e.target).addClass('external');
-				parent.postMessage({auction:{url:link}}, '*');
-			} else {
-				window.open(e.target, '_blank');
-			}
-		});
+		// do something
 	});
 
 
@@ -31,6 +23,8 @@ angular.module('mwaApp.controllers', ['ui.router'])
 
 	$scope.auction_order = ($stateParams.auction_order=='sale-day') ? 'auction_datetime' : false;
 	$scope.subtitle      = ($stateParams.auction_order=='sale-day') ? 'Sale Day' : 'Recent Posts';
+    $scope.auctions      = auctions;
+    $scope.states        = mwa.states;
 
 	$scope.goAuction = function(link) {
 		if(link[0] == '#') {
@@ -46,9 +40,6 @@ angular.module('mwaApp.controllers', ['ui.router'])
 			}
 		}
 	};
-
-    $scope.auctions = auctions;
-    $scope.states   = mwa.states;	
 
 	$scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
 		mwauction.showAds();
@@ -89,7 +80,47 @@ angular.module('mwaApp.controllers', ['ui.router'])
 
 .controller('StatesCtrl', function($scope) {
 	$scope.states = mwauction.states;
-}) 
+})
+
+.controller('StateCtrl', ['$scope', 'auctions', 'utils', 'states', '$stateParams', function($scope, auctions, utils, states, $stateParams) {
+
+	var i = 0;
+	
+	$scope.auctions = [];
+	$scope.state = utils.findBySlug(states.all(), $stateParams.slug);
+	$scope.subtitle = $scope.state.name;
+	$scope.auction_order = 'sale-day';
+	$scope.states = states;
+
+	for(i=0;i<auctions.length;i++) {
+		if(auctions[i].auction_state_id == $scope.state.id) {
+			$scope.auctions.push(auctions[i]);
+		}
+	}
+
+	$scope.goAuction = function(link) {
+		if(link[0] == '#') {
+			location.href = link;
+		} else {
+			if(window.parent &&
+			   window.parent.location &&
+			   window.parent.location.href &&
+			   window.parent.location.href == location.href) {
+				window.open(link, '_blank');
+			} else {
+				parent.postMessage({auction:{url:link}}, '*');
+			}
+		}
+	};
+
+	$scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+		mwauction.showAds();
+	});
+
+
+}])
+
+
 
 .controller('CategoryCtrl', function($scope){
 	$scope.cats = mwauction.categories;

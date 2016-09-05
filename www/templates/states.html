@@ -3,7 +3,7 @@
   <ion-content>
     <ion-list>
       <div class="ion-item-wrap" ng-repeat="state in states | filter:{show_in_dropdown: 1}">
-      	<ion-item class="state-item" href="#/app/state/{{state.slug}}">
+      	<ion-item class="state-item" href="#/state/{{state.slug}}">
       	  <center><h3>{{state.name}}</h3></center>
       	</ion-item>
       </div>

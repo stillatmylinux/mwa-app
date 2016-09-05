@@ -44,6 +44,22 @@ angular.module('mwaApp', ['ionic', 'mwaApp.controllers', 'ngMessages', 'mwaApp.a
     }
   })
 
+  .state('app.state', {
+    url: 'state/:slug',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/state.html',
+        controller: 'StateCtrl'
+      }
+    },
+    resolve: {
+      auctions: ['auctions',
+        function(auctions){
+          return auctions.all();
+        }]
+    },
+  })
+
   .state('app.categories', {
       url: 'categories',
       views: {
@@ -136,6 +152,13 @@ angular.module('mwaApp.auctions.service', [
   }).then(function (resp) {
     var _auctions = resp.data.all;
     for(i=0;i<_auctions.length;i++) {
+
+      // Format the date
+      var f_date = new Date(_auctions[i].auction_datetime + ' ' + _auctions[i].auction_time);
+      _auctions[i].format_date = f_date.format('%A, %b. %d');
+      _auctions[i].location = (_auctions[i].auction_state_id) ? _auctions[i].auction_city+', '+_auctions[i].auction_state_abbr : 'Online only';
+      
+      // Reset internal links
       if( _auctions[i].external_auction_link === '' ) {
         _auctions[i].url = '#/auction/' + _auctions[i].id;
       } else {
@@ -167,6 +190,14 @@ angular.module('mwaApp.utils.service', [
     findById: function findById(a, id) {
       for (var i = 0; i < a.length; i++) {
         if (a[i].id == id) return a[i];
+      }
+      return null;
+    },
+
+    // Util for finding an object by its 'slug' property among an array
+    findBySlug: function findBySlug(a, slug) {
+      for (var i = 0; i < a.length; i++) {
+        if (a[i].slug == slug) return a[i];
       }
       return null;
     },

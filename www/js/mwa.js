@@ -116,7 +116,7 @@ var mwauction = {
 			$(ele).html(mwauction.ads[mwauction.adCurrent++]);
 		});
 	},
-	init: function() {
+	init_ads: function() {
 		var url = mwauction.domain+mwauction.port+'/display/ads/';
 		
 		mwauction.ads = [
@@ -125,6 +125,22 @@ var mwauction = {
 			'<iframe src="'+url+'homepage/medrec2" width="257" height="122" frameborder="0"></iframe>',
 			'<iframe src="'+url+'homepage/topright" width="225" height="225" frameborder="0"></iframe>',
 		];
+	},
+	init: function() {
+		
+		mwauction.logo.fixLayout();
+		mwauction.init_ads();
+
+		$('body').on('click', '.mwa-item a', function(e) {
+			e.preventDefault();
+			if(e.target.href.indexOf('midwestauction.com') > 1) {
+				$(e.target).addClass('external');
+				parent.postMessage({auction:{url:link}}, '*');
+			} else {
+				window.open(e.target, '_blank');
+			}
+		});
+
 	},
 	shuffle: function(array) {
 		var currentIndex = array.length, temporaryValue, randomIndex;
@@ -180,11 +196,7 @@ var mwauction = {
 			console.log('registerUser');
 		},
 	}
-}
-
-$(document).ready( function() {
-	mwauction.init();
-});
+};
 
 /**
  * https://github.com/brightbits/formatDate-js
@@ -293,5 +305,5 @@ $(document).ready( function() {
 	};
 }).call(this);
 
-$(document).on('ready', mwauction.logo.fixLayout);
+$(document).on('ready', mwauction.init);
 $(window).on('resize', mwauction.logo.fixLayout);
