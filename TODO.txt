@@ -5,19 +5,21 @@ DONE - iOS - add spacing for status bar
 DONE - iOS - missing ads when switching between recent posts and sale day posts
 DONE - iOS - On login modal username and password fields don't work
 DONE - iOS - On registration modal username and password fields don't work
-iOS - On registration modal scrolling does work to view all fields
+DONE - iOS/Android - Open auction links in InApp Browser
+DONE - iOS/Android - Categories links to auctions lists
+DONE - iOS/Android - States links to auctions lists
+DONE - iOS/Android - Remove "Fill Test Form" button used for testing
 
-iOS/Android - Open auction links in InApp Browser
-iOS/Android - Categories links to auctions lists
-iOS/Android - States links to auctions lists
-iOS/Android - Remove active css on "Sale Day" or "Recent Posts" buttons
-iOS/Android - Remove "Fill Test Form" button used for testing
+----- Questions for Scott -----
+Icons - iOS/Android
 
 www - prompt users to download the app
 
 TODO (WANTS):
 Featured Auction sharing icons (Like, Comment, Share)
 Setup user preferences for categories for email or push notifications
+iOS - On registration modal scrolling does work to view all fields
+iOS/Android - Remove share icons
 
 
 
