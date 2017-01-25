@@ -4,7 +4,7 @@
 // 'mwaApp' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'mwaApp.controllers' is found in controllers.js
-angular.module('mwaApp', ['ionic', 'mwaApp.controllers', 'ngMessages', 'mwaApp.auctions.service', 'mwaApp.utils.service', 'mwaApp.states.service'])
+angular.module('mwaApp', ['ionic', 'mwaApp.controllers', 'ngMessages', 'mwaApp.auctions.service', 'mwaApp.utils.service', 'mwaApp.states.service', 'mwaApp.categories.service'])
 
 .config(function($ionicConfigProvider) {
   
@@ -48,7 +48,7 @@ angular.module('mwaApp', ['ionic', 'mwaApp.controllers', 'ngMessages', 'mwaApp.a
     url: 'state/:slug',
     views: {
       'menuContent': {
-        templateUrl: 'templates/state.html',
+        templateUrl: 'templates/auctions.html',
         controller: 'StateCtrl'
       }
     },
@@ -61,14 +61,31 @@ angular.module('mwaApp', ['ionic', 'mwaApp.controllers', 'ngMessages', 'mwaApp.a
   })
 
   .state('app.categories', {
-      url: 'categories',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/categories.html',
-          controller: 'CategoryCtrl'
-        }
+    url: 'categories',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/categories.html',
+        controller: 'CategoriesCtrl'
       }
-    })
+    }
+  })
+    
+  .state('app.category', {
+    url: 'category/:slug',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/auctions.html',
+        controller: 'CategoryCtrl'
+      }
+    },
+    resolve: {
+      auctions: ['auctions',
+        function(auctions){
+          return auctions.all();
+        }]
+    },
+  })
+
     .state('app.playlists', {
       url: 'playlists',
       views: {
@@ -156,6 +173,7 @@ angular.module('mwaApp.auctions.service', [
       // Format the date
       var f_date = new Date(_auctions[i].auction_datetime + ' ' + _auctions[i].auction_time);
       _auctions[i].format_date = f_date.format('%A, %b. %d');
+
       _auctions[i].location = (_auctions[i].auction_state_id) ? _auctions[i].auction_city+', '+_auctions[i].auction_state_abbr : 'Online only';
       
       // Reset internal links
@@ -229,6 +247,24 @@ angular.module('mwaApp.states.service', [
   };
   factory.get = function (id) {
     return states[id];
+  };
+  return factory;
+}]);
+
+angular.module('mwaApp.categories.service', [
+
+])
+// A RESTful factory for retrieving auctions from db
+.factory('categories', ['$http', 'utils', function ($http, utils) {
+
+  var categories = mwauction.categories;
+
+  var factory = {};
+  factory.all = function () {
+    return categories;
+  };
+  factory.get = function (id) {
+    return categories[id];
   };
   return factory;
 }]);

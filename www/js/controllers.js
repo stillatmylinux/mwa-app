@@ -30,13 +30,10 @@ angular.module('mwaApp.controllers', ['ui.router'])
 		if(link[0] == '#') {
 			location.href = link;
 		} else {
-			if(window.parent &&
-			   window.parent.location &&
-			   window.parent.location.href &&
-			   window.parent.location.href == location.href) {
-				window.open(link, '_blank');
-			} else {
+			if(mwauction.device) {
 				parent.postMessage({auction:{url:link}}, '*');
+			} else {
+				window.open(link, '_blank');
 			}
 		}
 	};
@@ -90,7 +87,7 @@ angular.module('mwaApp.controllers', ['ui.router'])
 	$scope.state = utils.findBySlug(states.all(), $stateParams.slug);
 	$scope.subtitle = $scope.state.name;
 	$scope.auction_order = 'sale-day';
-	$scope.states = states;
+	$scope.states = states.all();
 
 	for(i=0;i<auctions.length;i++) {
 		if(auctions[i].auction_state_id == $scope.state.id) {
@@ -102,13 +99,10 @@ angular.module('mwaApp.controllers', ['ui.router'])
 		if(link[0] == '#') {
 			location.href = link;
 		} else {
-			if(window.parent &&
-			   window.parent.location &&
-			   window.parent.location.href &&
-			   window.parent.location.href == location.href) {
-				window.open(link, '_blank');
-			} else {
+			if(mwauction.device) {
 				parent.postMessage({auction:{url:link}}, '*');
+			} else {
+				window.open(link, '_blank');
 			}
 		}
 	};
@@ -122,9 +116,48 @@ angular.module('mwaApp.controllers', ['ui.router'])
 
 
 
-.controller('CategoryCtrl', function($scope){
+.controller('CategoriesCtrl', function($scope){
 	$scope.cats = mwauction.categories;
+
+
 })
+
+.controller('CategoryCtrl', ['$scope', 'auctions', 'utils', 'states', 'categories', '$stateParams', function($scope, auctions, utils, states, categories, $stateParams) {
+	
+	var i = 0;
+	var j = 0;
+	
+	$scope.auctions = [];
+	$scope.category = utils.findBySlug(categories.all(), $stateParams.slug);
+	$scope.subtitle = $scope.category.name;
+	$scope.auction_order = 'sale-day';
+	$scope.states = states.all();
+
+	for(i=0;i<auctions.length;i++) {
+
+		for(j=0;j<auctions[i].categories.length;j++) {
+			if(auctions[i].categories[j] == $scope.category.id) {
+				$scope.auctions.push(auctions[i]);
+			}
+		}
+	}
+
+	$scope.goAuction = function(link) {
+		if(link[0] == '#') {
+			location.href = link;
+		} else {
+			if(mwauction.device) {
+				parent.postMessage({auction:{url:link}}, '*');
+			} else {
+				window.open(link, '_blank');
+			}
+		}
+	};
+
+	$scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+		mwauction.showAds();
+	});
+}])
 
 .controller('FeaturedAdsCtrl', function($scope, $http, $ionicSlideBoxDelegate) {
 	$http({
@@ -194,8 +227,6 @@ angular.module('mwaApp.controllers', ['ui.router'])
 
 	// Perform the login action when the user submits the login form
 	$scope.doLogin = function() {
-
-		// console.log( mwauction.domain + mwauction.port + '/auth/token/login');
 
 		$http({
 			method: 'POST',

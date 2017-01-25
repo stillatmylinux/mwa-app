@@ -3,12 +3,12 @@
   <ion-content cache-view="true">
     <ion-list>
       <div class="ion-item-wrap" ng-repeat="auction in auctions | orderBy: auction_order" on-auctionlist-complete>
-      	<div ng-if="($index % 5) == 0 && $index <= 15" class="ad-placement" ad-placement></div>
-      	<ion-item href="{{auction.url}}" ng-class="auction.url.indexOf('http') == -1 ? 'auction-item':'auction-item external'" ng-click="$event.preventDefault();goAuction(auction.url)">
-      	  <span class="date">{{auction.format_date}}</span>
-      	  <span class="location">{{auction.auction_city}}, <span>{{states[auction.auction_state_id]}}</span>
-      	  <h3>{{auction.auction_short_title}}</h3>
-      	</ion-item>
+        <div ng-if="($index % 5) == 0 && $index <= 15" class="ad-placement" ad-placement></div>
+        <ion-item href="{{auction.url}}" ng-class="auction.url.indexOf('http') == -1 ? 'auction-item':'auction-item external'" ng-click="$event.preventDefault();goAuction(auction.url)">
+          <span class="date">{{auction.format_date}}</span>
+          <span class="location">{{auction.location}}</span>
+          <h3>{{auction.auction_short_title}}</h3>
+        </ion-item>
       </div>
     </ion-list>
   </ion-content>
