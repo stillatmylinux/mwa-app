@@ -13,6 +13,10 @@ var mwauction = {
 	port: '',
 	adCurrent: 0,
 	device:'',
+	platform:{
+		deviceIsIOS:(/iP(ad|hone|od)/.test(navigator.userAgent)||/Safari/.test(navigator.userAgent)),
+		deviceIsAndroid:navigator.userAgent.indexOf('Android') > 0,
+	},
 	ads: [],
 	all: [],
 	adTemplate: '<div class="ad-div adsbymwa responsive"><p>Advertisement</p><div></div></div>',
@@ -76,6 +80,23 @@ var mwauction = {
 			}
 			$(ele).html(mwauction.ads[mwauction.adCurrent++]);
 		});
+	},
+	str_to_date: function( date ) {
+
+		var f_date, _f_date, _date, _time;
+
+		// date = 2017-02-09 10:00
+		if( mwauction.platform.deviceIsIOS ) {
+			f_date = date
+			_f_date = f_date.split(' ');
+			_date = _f_date[0].split('-');
+			_time = _f_date[1];
+			f_date = new Date(_date[1]+'/'+_date[2]+'/'+_date[0]+' '+_time[0]+':00');
+		} else {
+			f_date = new Date(date);
+		}
+
+		return f_date;
 	},
 	init_states: function() {
 

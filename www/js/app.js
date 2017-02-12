@@ -170,8 +170,8 @@ angular.module('mwaApp.auctions.service', [
     var _auctions = resp.data.all;
     for(i=0;i<_auctions.length;i++) {
 
-      // Format the date
-      var f_date = new Date(_auctions[i].auction_datetime + ' ' + _auctions[i].auction_time);
+      var f_date = mwauction.str_to_date(_auctions[i].auction_datetime + ' ' + _auctions[i].auction_time);
+
       _auctions[i].format_date = f_date.format('%A, %b. %d');
 
       _auctions[i].location = (_auctions[i].auction_state_id) ? _auctions[i].auction_city+', '+_auctions[i].auction_state_abbr : 'Online only';

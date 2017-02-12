@@ -6,7 +6,8 @@ angular.module('mwaApp.controllers', ['ui.router'])
 
 	$scope.subtitle = $scope.auction.seller;
 
-	var f_date = new Date($scope.auction.auction_datetime + ' ' + $scope.auction.auction_time);
+	var f_date = mwauction.str_to_date( $scope.auction.auction_datetime + ' ' + $scope.auction.auction_time );
+	f_date = new Date( f_date );
 	$scope.auction.auction_datetime = f_date.format('%A, %b. %d');
 
 	$scope.location = ($scope.auction.auction_state_id) ? $scope.auction.auction_city+', '+$scope.auction.auction_state_abbr : 'Online only';
