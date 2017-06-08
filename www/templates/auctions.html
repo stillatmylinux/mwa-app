@@ -2,7 +2,7 @@
   <div class="logo"><img src="https://m.midwestauction.com/img/logo11-m.png"></div>
   <ion-content cache-view="true">
     <ion-list>
-      <div class="ion-item-wrap" ng-repeat="auction in auctions | orderBy: auction_order : reverse | filter:" on-auctionlist-complete>
+      <div class="ion-item-wrap" ng-repeat="auction in auctions | orderBy: auction_order : reverse" on-auctionlist-complete>
         <div ng-if="($index % 5) == 0 && $index <= 15" class="ad-placement" ad-placement></div>
         <ion-item href="{{auction.url}}" ng-class="auction.url.indexOf('http') == -1 ? 'auction-item':'auction-item external'" ng-click="$event.preventDefault();goAuction(auction.url)">
           <span class="date">{{auction.format_date}}</span>
