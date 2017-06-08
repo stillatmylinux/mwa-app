@@ -22,8 +22,18 @@ angular.module('mwaApp.controllers', ['ui.router'])
 
 .controller('AuctionsCtrl', ['$scope', '$http', '$stateParams', 'auctions', function($scope, $http, $stateParams, auctions) {
 
-	$scope.auction_order = ($stateParams.auction_order=='sale-day') ? 'auction_datetime' : false;
+	$scope.auction_order = ($stateParams.auction_order=='sale-day') ? 'auction_datetime' : 'id';
+	$scope.reverse = ($stateParams.auction_order=='sale-day') ? false : true;
 	$scope.subtitle      = ($stateParams.auction_order=='sale-day') ? 'Sale Day' : 'Recent Posts';
+
+	/**
+	 * Because we want to order recent auctions by id, we need
+	 * to convert the id into an int.
+	 */
+	for (var i = 0; i < auctions.length; i++) {
+		auctions[i].id = +auctions[i].id;
+	};
+	
     $scope.auctions      = auctions;
     $scope.states        = mwa.states;
 
